@@ -1,23 +1,19 @@
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args){
-        try(FileInputStream fin = new FileInputStream("new.txt"))
-        {
-            byte[] bufer = new byte[256];
-            System.out.println("File data:");
-
+    public static void  main(String[] args){
+        try(FileInputStream fin = new FileInputStream("new.txt");
+            FileOutputStream fos = new FileOutputStream("new_1.txt")){
+            byte[] buffer = new byte[256];
             int count;
-            while((count = fin.read(bufer)) != -1)
-            {
-                for(int i = 0; i < count; i++)
-                {
-                    System.out.print((char)bufer[i]);
-                }
+            //считываем буфер
+            while((count = fin.read(buffer)) != -1){
+                //записываем из буфера в файл
+                fos.write(buffer, 0, count);
             }
+            System.out.println("File has been written");
         }
-        catch (IOException ex)
-        {
+        catch(IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
