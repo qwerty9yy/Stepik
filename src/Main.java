@@ -1,15 +1,20 @@
 import java.io.*;
 
-public class Main{
-    public static void main(String[] args){
-        try(FileInputStream fin = new FileInputStream("C:\\Users\\Lite\\Desktop\\java\\файлы\\test.txt")) {
-            int i = -1;
-            while((i = fin.read()) != -1){
-                System.out.print((char)i);
-            }
+public class Main {
+    public static void main(String[] args) {
+        byte[] array1 = new byte[]{1, 3, 5, 7};
+        ByteArrayInputStream byteStream1 = new ByteArrayInputStream(array1);
+        int b;
+        while((b = byteStream1.read()) != -1) {
+            System.out.print(b);
         }
-        catch(IOException ex) {
-            System.out.println(ex.getMessage());
+        String text = "Hello word!";
+        byte[] array2 = text.getBytes();
+        //Считываем 5 символов
+        ByteArrayInputStream byteStream2 = new ByteArrayInputStream(array2, 0, 5);
+        int c;
+        while((c = byteStream2.read()) != -1) {
+            System.out.print((char)c);
         }
     }
 }
