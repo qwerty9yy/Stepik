@@ -1,19 +1,20 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
-
-    public static void main(String[] args) {
-
-        String text = "Hello world!"; // строка для записи
-        try(FileOutputStream out=new FileOutputStream("notes.txt");
-            BufferedOutputStream bos = new BufferedOutputStream(out))
+    public static void main(String[] args){
+        try(FileReader reader = new FileReader("notes3.txt"))
         {
-            // перевод строки в байты
-            byte[] buffer = text.getBytes();
-            bos.write(buffer, 0, buffer.length);
+            char[] buf = new char[256];
+            int c;
+            while((c = reader.read(buf)) > 0){
+                if(c < 256){
+                    buf = Arrays.copyOf(buf, c);
+                }
+                System.out.print(buf);
+            }
         }
         catch(IOException ex){
-
             System.out.println(ex.getMessage());
         }
     }
