@@ -1,21 +1,20 @@
 import java.io.*;
 
-public class Main{
+public class Main {
+
     public static void main(String[] args) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        String text = "Hello Wolrd!";
-        byte[] buffer = text.getBytes();
-        try {
-            baos.write(buffer);
+
+        String text = "Hello world!"; // строка для записи
+        try(FileOutputStream out=new FileOutputStream("notes.txt");
+            BufferedOutputStream bos = new BufferedOutputStream(out))
+        {
+            // перевод строки в байты
+            byte[] buffer = text.getBytes();
+            bos.write(buffer, 0, buffer.length);
         }
-        catch(Exception ex) {
+        catch(IOException ex){
+
             System.out.println(ex.getMessage());
-        }
-        try(FileOutputStream fos = new FileOutputStream("hello.txt")) {
-            baos.writeTo(fos);
-        }
-        catch(IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 }
