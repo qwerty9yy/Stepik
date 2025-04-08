@@ -1,21 +1,19 @@
-import java.io.*;
-import java.util.Arrays;
+class Person implements Serializable{
 
-public class Main {
-    public static void main(String[] args){
-        try(FileReader reader = new FileReader("notes3.txt"))
-        {
-            char[] buf = new char[256];
-            int c;
-            while((c = reader.read(buf)) > 0){
-                if(c < 256){
-                    buf = Arrays.copyOf(buf, c);
-                }
-                System.out.print(buf);
-            }
-        }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
+    private String name;
+    private int age;
+    private transient double height;
+    private transient boolean married;
+
+    Person(String n, int a, double h, boolean m){
+
+        name=n;
+        age=a;
+        height=h;
+        married=m;
     }
+    String getName() {return name;}
+    int getAge(){ return age;}
+    double getHeight(){return height;}
+    boolean getMarried(){return married;}
 }
