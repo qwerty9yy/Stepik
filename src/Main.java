@@ -1,22 +1,17 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-       File file = new File("My.txt");
-       try(FileWriter writer = new FileWriter(file))
-       {
-           String text = "Это простой пример,\nв котором мы осуществляем\nс помощью языка Java\nзапись в файл\nи чтение из файла\n";
-           writer.write(text);
-       }catch(IOException ex) {
-           System.out.println(ex.getMessage());
-       }
-       try(FileReader fr = new FileReader(file))
-       {
-           char[] buffer = new char[(int)file.length()];
-           fr.read(buffer);
-           System.out.print(new String(buffer));
-       }catch(IOException ex){
-           System.out.println(ex.getMessage());
-       }
+        Scanner sc = new Scanner(System.in);
+        String text = sc.nextLine(); //Создали перемнную для ввода выражения
+        String[] str = text.split(" ");//Разделяем на пробелы
+
+        //Проверка для длину вводимых данных
+        if(str.length != 3){
+            System.out.println("The length does not match");
+            return;
+        }
+
     }
 }
