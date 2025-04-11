@@ -30,6 +30,8 @@ public class Main {
             }
         } catch (Exception ex){
             System.out.println("Error! Not number");
+        }finally {
+            sc.close();
         }
     }
 }
