@@ -3,52 +3,47 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        try(BufferedReader reader = new BufferedReader(new FileReader("input.txt"));
-            FileWriter fileWriter = new FileWriter("output.txt")){
+       try(BufferedReader reader = new BufferedReader(new FileReader("input.txt"));
+           FileWriter fileWriter = new FileWriter("output.txt")){
 
-            String line; //Переменная для хранения выражения
-            while((line = reader.readLine()) != null){
-                line = line.trim(); //Удаляем лишние пробелы
-                if(line.isEmpty()) continue; //Пропускаяем пустые строчки
-                String[] arr = line.split("\\s+"); //Разделяем на оюбое кол-во пробелов
+           String line;
+           while((line = reader.readLine()) != null){
+               line = line.trim();
+               if(line.isEmpty()) continue;
+               String[] arr = line.split("\\s+");
 
-                if(arr.length != 3){
-                    fileWriter.write(line + " = Ошибка! Не правильное кол-во значений\n");
-                    continue;
-                }
-                try{
-                    //Перевод в Double
-                    double a = Double.parseDouble(arr[0]);
-                    double b = Double.parseDouble(arr[2]);
+               if(arr.length != 3)
+                   fileWriter.write(line + " = Ошибка! Не правильное кол-во\n");
 
-                    String ops = arr[1]; //Присвоение значения знака
+               try {
+                   double a = Double.parseDouble(arr[0]);
+                   double b = Double.parseDouble(arr[2]);
 
-                    if(!ops.equals("+") && !ops.equals("-") && !ops.equals("/") && !ops.equals("*")){
-                        fileWriter.write(line + " = Знак не соответсвует заданию\n");
-                    }
+                   String sign = arr[1];
+                   if(!sign.equals("+") && !sign.equals("-") && !sign.equals("/") && !sign.equals("*")){
+                       fileWriter.write(line + " = Знак не соответствует заданию\n");
+                   }
 
-                    //Создание переменой для хранения ответа
-                    double result = 0;
-                    switch(ops){
-                        case "+": result = a + b; break;
-                        case "-": result = a - b; break;
-                        case "/":
-                            if(b == 0){
-                                fileWriter.write(line + " = Делить на ноль нельзя\n");
-                                continue;
-                            }
-                            result = a / b;
-                            break;
-                        case "*": result = a * b; break;
-                        default: continue;
-                    }
-                    fileWriter.write(line + " = " + result + "\n");
-                }catch(NumberFormatException ex){
-                    fileWriter.write(line + " = Не число\n");
-                }
-            }
-        }catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
+                   double result;
+                   switch(sign){
+                       case "+": result = a + b; break;
+                       case "-": result = a - b; break;
+                       case "/":
+                           if(b == 0){
+                               fileWriter.write(line + " = на ноль делить нельзя\n");
+                               continue;
+                           }
+                           result = a / b; break;
+                       case "*": result = a * b; break;
+                       default: continue;
+                   }
+                   fileWriter.write(line + " = " + result + "\n");
+               }catch(NumberFormatException ex){
+                   fileWriter.write(line + " = Не является числом\n");
+               }
+           }
+       }catch(IOException ex){
+           System.out.println("Ошибка: " + ex.getMessage());
+       }
     }
 }
