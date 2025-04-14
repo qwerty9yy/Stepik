@@ -1,1 +1,2 @@
-Result: 2.0
+Result: 2.0Result: 4.0Result: 6.0
+Result: 8.0

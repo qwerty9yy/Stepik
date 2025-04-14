@@ -10,8 +10,8 @@ public class Main {
 
         //Создание файла для записи выражения
         File file = new File("input.txt");
-        try(FileWriter fileWriter = new FileWriter(file)){
-            fileWriter.write(text + "\n");
+        try(FileWriter fileWriter = new FileWriter("input.txt", true)){
+            fileWriter.append(text + "\n");
         }catch (IOException ex){
             System.out.println(ex.getMessage());
         }
@@ -22,32 +22,32 @@ public class Main {
                 a = Double.parseDouble(arr[0]);
                 b = Double.parseDouble(arr[2]);
             }catch (NumberFormatException ex){
-                fw.append("Error! Not number");
+                fw.append("Error! Not number\n");
                 return;
             }
 
             String ops = arr[1];
             if(!ops.equals("+") && !ops.equals("-") && !ops.equals("*") && !ops.equals("/")){
-                fw.append("Operation Error!");
+                fw.append("Operation Error!\n");
             }
 
             double sum;
             switch (ops) {
                 case "+":
                     sum = a + b;
-                    fw.append("Result: " + sum);
+                    fw.append("Result: " + sum + "\n");
                     break;
                 case "-":
                     sum = a - b;
-                    fw.append("Result: " + sum);
+                    fw.append("Result: " + sum + "\n");
                     break;
                 case "*":
                     sum = a * b;
-                    fw.append("Result: " + sum);
+                    fw.append("Result: " + sum + "\n");
                     break;
                 case "/":
                     sum = a / b;
-                    fw.append(b == 0 ? "Error! Division by zero" : "Result: " + sum);
+                    fw.append(b == 0 ? "Error! Division by zero\n" : "Result: " + sum + "\n");
                     break;
             }
         }catch (IOException ex){
