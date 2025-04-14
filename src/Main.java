@@ -8,14 +8,16 @@ public class Main {
         String[] arr = text.split(" ");
         double a, b;
 
+        //Создание файла для записи выражения
         File file = new File("input.txt");
         try(FileWriter fileWriter = new FileWriter(file)){
             fileWriter.write(text + "\n");
         }catch (IOException ex){
             System.out.println(ex.getMessage());
         }
-
-        try(FileWriter fw = new FileWriter("input.txt", true)){
+        //Создание файла для записи ответа
+        File file_answer = new File("output.txt");
+        try(FileWriter fw = new FileWriter("output.txt", true)){
             try{
                 a = Double.parseDouble(arr[0]);
                 b = Double.parseDouble(arr[2]);
@@ -58,6 +60,15 @@ public class Main {
             fileReader.read(buffer);
             System.out.print(new String(buffer));
         }catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        //Чтнение из файла ответа
+        try(FileReader fileReader = new FileReader(file_answer)){
+            char[] buffer = new char[(int)file_answer.length()];
+            fileReader.read(buffer);
+            System.out.println(new String(buffer));
+        }catch(IOException ex){
             System.out.println(ex.getMessage());
         }
 
