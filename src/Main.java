@@ -10,39 +10,42 @@ public class Main {
 
         File file = new File("input.txt");
         try(FileWriter fileWriter = new FileWriter(file)){
-            fileWriter.write(text);
+            fileWriter.write(text + "\n");
         }catch (IOException ex){
             System.out.println(ex.getMessage());
         }
 
         try(FileWriter fw = new FileWriter("input.txt", true)){
-            a = Double.parseDouble(arr[0]);
-            b = Double.parseDouble(arr[2]);
+            try{
+                a = Double.parseDouble(arr[0]);
+                b = Double.parseDouble(arr[2]);
+            }catch (NumberFormatException ex){
+                fw.append("Error! Not number");
+                return;
+            }
+
             String ops = arr[1];
             if(!ops.equals("+") && !ops.equals("-") && !ops.equals("*") && !ops.equals("/")){
-                fw.write("Operation Error!");
-            }
-            try{
-                Double.parseDouble(a);
+                fw.append("Operation Error!");
             }
 
             double sum;
             switch (ops) {
                 case "+":
                     sum = a + b;
-                    fw.write("Result: " + sum);
+                    fw.append("Result: " + sum);
                     break;
                 case "-":
                     sum = a - b;
-                    fw.write("Result: " + sum);
+                    fw.append("Result: " + sum);
                     break;
                 case "*":
                     sum = a * b;
-                    fw.write("Result: " + sum);
+                    fw.append("Result: " + sum);
                     break;
                 case "/":
                     sum = a / b;
-                    fw.write(b == 0 ? "Error! Division by zero" : "Result: " + sum);
+                    fw.append(b == 0 ? "Error! Division by zero" : "Result: " + sum);
                     break;
             }
         }catch (IOException ex){
@@ -50,13 +53,13 @@ public class Main {
         }
 
         //Чтение из файла
-//        try(FileReader fileReader = new FileReader(file)){
-//            char[] buffer = new char[(int)file.length()];
-//            fileReader.read(buffer);
-//            System.out.print(new String(buffer));
-//        }catch (IOException ex) {
-//            System.out.println(ex.getMessage());
-//        }
+        try(FileReader fileReader = new FileReader(file)){
+            char[] buffer = new char[(int)file.length()];
+            fileReader.read(buffer);
+            System.out.print(new String(buffer));
+        }catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
 }
