@@ -3,74 +3,52 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        String text = sc.nextLine();
-        String[] arr = text.split(" ");
-        double a, b;
+        try(BufferedReader reader = new BufferedReader(new FileReader("input.txt"));
+            FileWriter fileWriter = new FileWriter("output.txt")){
 
-        //Создание файла для записи выражения
-        File file = new File("input.txt");
-        try(FileWriter fileWriter = new FileWriter("input.txt", true)){
-            fileWriter.append(text + "\n");
-        }catch (IOException ex){
-            System.out.println(ex.getMessage());
-        }
-        //Создание файла для записи ответа
-        File file_answer = new File("output.txt");
-        try(FileWriter fw = new FileWriter("output.txt", true)){
-            try{
-                a = Double.parseDouble(arr[0]);
-                b = Double.parseDouble(arr[2]);
-            }catch (NumberFormatException ex){
-                fw.append("Error! Not number\n");
-                return;
+            String line; //Переменная для хранения выражения
+            while((line = reader.readLine()) != null){
+                line = line.trim(); //Удаляем лишние пробелы
+                if(line.isEmpty()) continue; //Пропускаяем пустые строчки
+                String[] arr = line.split("\\s+"); //Разделяем на оюбое кол-во пробелов
+
+                if(arr.length != 3){
+                    fileWriter.write(line + " = Ошибка! Не правильное кол-во значений\n");
+                    continue;
+                }
+                try{
+                    //Перевод в Double
+                    double a = Double.parseDouble(arr[0]);
+                    double b = Double.parseDouble(arr[2]);
+
+                    String ops = arr[1]; //Присвоение значения знака
+
+                    if(!ops.equals("+") && !ops.equals("-") && !ops.equals("/") && !ops.equals("*")){
+                        fileWriter.write(line + " = Знак не соответсвует заданию\n");
+                    }
+
+                    //Создание переменой для хранения ответа
+                    double result = 0;
+                    switch(ops){
+                        case "+": result = a + b; break;
+                        case "-": result = a - b; break;
+                        case "/":
+                            if(b == 0){
+                                fileWriter.write(line + " = Делить на ноль нельзя\n");
+                                continue;
+                            }
+                            result = a / b;
+                            break;
+                        case "*": result = a * b; break;
+                        default: continue;
+                    }
+                    fileWriter.write(line + " = " + result + "\n");
+                }catch(NumberFormatException ex){
+                    fileWriter.write(line + " = Не число\n");
+                }
             }
-
-            String ops = arr[1];
-            if(!ops.equals("+") && !ops.equals("-") && !ops.equals("*") && !ops.equals("/")){
-                fw.append("Operation Error!\n");
-            }
-
-            double sum;
-            switch (ops) {
-                case "+":
-                    sum = a + b;
-                    fw.append("Result: " + sum + "\n");
-                    break;
-                case "-":
-                    sum = a - b;
-                    fw.append("Result: " + sum + "\n");
-                    break;
-                case "*":
-                    sum = a * b;
-                    fw.append("Result: " + sum + "\n");
-                    break;
-                case "/":
-                    sum = a / b;
-                    fw.append(b == 0 ? "Error! Division by zero\n" : "Result: " + sum + "\n");
-                    break;
-            }
-        }catch (IOException ex){
-            System.out.println(ex.getMessage());
-        }
-
-        //Чтение из файла
-        try(FileReader fileReader = new FileReader(file)){
-            char[] buffer = new char[(int)file.length()];
-            fileReader.read(buffer);
-            System.out.print(new String(buffer));
-        }catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        //Чтнение из файла ответа
-        try(FileReader fileReader = new FileReader(file_answer)){
-            char[] buffer = new char[(int)file_answer.length()];
-            fileReader.read(buffer);
-            System.out.println(new String(buffer));
         }catch(IOException ex){
             System.out.println(ex.getMessage());
         }
-
     }
 }
