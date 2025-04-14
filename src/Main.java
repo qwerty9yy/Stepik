@@ -44,6 +44,7 @@ public class Main {
            }
        }catch(IOException ex){
            System.out.println("Ошибка: " + ex.getMessage());
+
        }
     }
 }
